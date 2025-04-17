@@ -5,6 +5,7 @@ node_modules/
 
 # Expo
 .expo/
+.expo-shared/
 dist/
 web-build/
 expo-env.d.ts
@@ -29,10 +30,27 @@ yarn-error.*
 .DS_Store
 *.pem
 
+# Windows
+Thumbs.db
+desktop.ini
+
 # local env files
+.env*
 .env*.local
 
 # typescript
 *.tsbuildinfo
 
+# Logs
+*.log
+
+# IDEs
+.vscode/
+.idea/
+
+# Temporary files
+tmp/
+temp/
+
+# Example files
 app-example
