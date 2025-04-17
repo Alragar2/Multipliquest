@@ -6,6 +6,7 @@ import InputBox from "../components/InputBox";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { generateRandomNumbers } from "../utils/generateRandomNumbers"; // Importa la función
+import PredButton from "../components/PredButton";
 
 export default function DetailsScreen() {
   const router = useRouter();
@@ -177,7 +178,13 @@ export default function DetailsScreen() {
     <View style={styles.container}>
       {showRefreshButton && (
         <View style={styles.refreshButtonContainer}>
-          <Button title="🔄" onPress={generateNewNumbers} />
+          <PredButton 
+            onPress={generateNewNumbers} 
+            title=" " 
+            iconName="refresh-outline"
+            size="small" 
+            iconMargin={0} 
+          />
         </View>
       )}
       <View style={styles.title}>
@@ -244,9 +251,8 @@ const styles = StyleSheet.create({
   },
   refreshButtonContainer: {
     position: "absolute",
-    top: 10,
-    right: 10,
-    zIndex: 1, // Asegura que el botón esté por encima de otros elementos
+    top: 15,
+    right: 15,
   },
   title: {
     flex: 0.8,
