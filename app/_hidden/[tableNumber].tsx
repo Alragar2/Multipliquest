@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { View, Text, StyleSheet, Animated, Platform } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import NumberKeyboard from "../components/NumberKeyboard";
-import InputBox from "../components/InputBox";
+import NumberKeyboard from "../_components/NumberKeyboard";
+import InputBox from "../_components/InputBox";
 import confettiAnimation from "../../assets/animations/confeti.json"; // Importa la animación
 
 // Importa Lottie solo para dispositivos móviles
@@ -30,7 +30,7 @@ export default function CalcTablasScreen() {
 
       if (multiplier === 10) {
         alert("¡Felicidades! Has completado la tabla.");
-        router.replace("/");
+        router.replace("/"); // Actualiza la ruta de redirección
       } else {
         setMultiplier((prev) => prev + 1);
         setInputValue("");

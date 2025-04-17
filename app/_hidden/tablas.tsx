@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, FlatList, Platform } from "react-native";
 import { useRouter } from "expo-router";
-import TablButton from "../components/TablButton";
-import Background from "../components/Background";
+import TablButton from "../_components/TablButton";
+import Background from "../_components/Background";
 
 export default function DetailsScreen() {
   const router = useRouter();
@@ -9,7 +9,7 @@ export default function DetailsScreen() {
   const renderItem = ({ item, index }: { item: number; index: number }) => (
     <TablButton
       key={item}
-      onPress={() => router.push(`/(tabs)/${item}`)} // Pasa el número dinámicamente en la ruta
+      onPress={() => router.push(`/_hidden/${item}`)} // Actualiza la ruta dinámica
       title={`Tabla del ${item}`}
       tablenumber={item}
       index={index} // Pasa el índice al componente TablButton

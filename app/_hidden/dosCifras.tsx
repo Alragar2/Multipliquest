@@ -1,14 +1,14 @@
 import { View, Text, Button, TextInput, Platform } from "react-native";
 import { StyleSheet } from "react-native";
-import NumberKeyboard from "../components/NumberKeyboard";
+import NumberKeyboard from "../_components/NumberKeyboard";
 import { useRouter } from "expo-router";
-import InputBox from "../components/InputBox";
+import InputBox from "../_components/InputBox";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { generateRandomNumbers } from "../utils/generateRandomNumbers"; // Importa la función
-import PredButton from "../components/PredButton";
+import PredButton from "../_components/PredButton";
 
-export default function DetailsScreen() {
+export default function DosCifrasScreen() {
   const router = useRouter();
 
   // Estado para almacenar los números generados
