@@ -3,17 +3,14 @@ import { View, Text, StyleSheet, Animated, Platform } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import NumberKeyboard from "../_components/NumberKeyboard";
 import InputBox from "../_components/InputBox";
-import confettiAnimation from "../../assets/animations/confeti.json"; // Importa la animación
-
-// Importa Lottie solo para dispositivos móviles
-const LottieView = Platform.OS !== "web" ? require("lottie-react-native").default : null;
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { addAchievement } from "../_utils/achievements";
 
 export default function CalcTablasScreen() {
   const { tableNumber } = useLocalSearchParams();
   const router = useRouter();
   const [inputValue, setInputValue] = useState<string>("");
   const [multiplier, setMultiplier] = useState<number>(1);
-  const [showConfetti, setShowConfetti] = useState(false); // Estado para controlar la animación de confeti
 
   const shakeAnimation = useRef(new Animated.Value(0)).current;
   const colorAnimation = useRef(new Animated.Value(0)).current;
@@ -22,15 +19,23 @@ export default function CalcTablasScreen() {
     setInputValue((prev) => prev + number);
   };
 
-  const handleAccept = () => {
+  const handleAccept = async () => {
     const correctAnswer = Number(tableNumber) * multiplier;
     if (parseInt(inputValue) === correctAnswer) {
-      setShowConfetti(true); // Muestra la animación de confeti
-      setTimeout(() => setShowConfetti(false), 3000); // Oculta la animación después de 3 segundos
-
       if (multiplier === 10) {
+        if (tableNumber === "1") {
+          await addAchievement("¡Logro desbloqueado! Completaste la tabla del 1.");
+        }
+        if (tableNumber === "5") {
+          await addAchievement("¡Logro desbloqueado! Completaste la tabla del 5.");
+        }
+        if (tableNumber === "10") {
+          await addAchievement("¡Logro desbloqueado! Completaste la tabla del 10.");
+        }
+        await addAchievement(`¡Logro desbloqueado! Completaste la tabla del ${tableNumber}.`);
+        await checkAllTablesCompleted(); // Verifica si se completaron todas las tablas
         alert("¡Felicidades! Has completado la tabla.");
-        router.replace("/"); // Actualiza la ruta de redirección
+        router.replace("/");
       } else {
         setMultiplier((prev) => prev + 1);
         setInputValue("");
@@ -38,6 +43,21 @@ export default function CalcTablasScreen() {
     } else {
       triggerErrorAnimation();
       setInputValue("");
+    }
+  };
+
+  const checkAllTablesCompleted = async () => {
+    try {
+      const storedAchievements = await AsyncStorage.getItem("achievements");
+      const achievements = storedAchievements ? JSON.parse(storedAchievements) : [];
+      const allTablesCompleted = Array.from({ length: 10 }, (_, i) => `¡Logro desbloqueado! Completaste la tabla del ${i + 1}.`);
+      const hasCompletedAllTables = allTablesCompleted.every((table) => achievements.includes(table));
+
+      if (hasCompletedAllTables && !achievements.includes("¡Logro desbloqueado! Completaste todas las tablas.")) {
+        await addAchievement("¡Logro desbloqueado! Completaste todas las tablas.");
+      }
+    } catch (error) {
+      console.error("Error al verificar si se completaron todas las tablas:", error);
     }
   };
 
@@ -85,14 +105,6 @@ export default function CalcTablasScreen() {
 
   return (
     <View style={styles.container}>
-      {showConfetti && Platform.OS !== "web" && (
-        <LottieView
-          source={confettiAnimation}
-          autoPlay
-          loop={false}
-          style={styles.confetti}
-        />
-      )}
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Tabla del {tableNumber}</Text>
       </View>
@@ -146,12 +158,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#89E7FF",
     justifyContent: "center",
     alignItems: "center",
-  },
-  confetti: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    zIndex: 2,
   },
   titleContainer: {
     flex: 2,

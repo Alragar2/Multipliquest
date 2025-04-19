@@ -7,6 +7,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { generateRandomNumbers } from "../utils/generateRandomNumbers"; // Importa la función
 import PredButton from "../_components/PredButton";
+import { addAchievement } from "../_utils/achievements";
 
 export default function DosCifrasScreen() {
   const router = useRouter();
@@ -30,6 +31,9 @@ export default function DosCifrasScreen() {
 
   // Estado para controlar la visibilidad del botón de refrescar
   const [showRefreshButton, setShowRefreshButton] = useState(false);
+
+  // Estado para contar las multiplicaciones completadas
+  const [multiplicationsCompleted, setMultiplicationsCompleted] = useState<number>(0);
 
   // Genera los números aleatorios solo al entrar a la pantalla o al refrescar
   const generateNewNumbers = () => {
@@ -126,7 +130,7 @@ export default function DosCifrasScreen() {
     [false, false, false, false], // Fila 5
   ]);
 
-  const handleAccept = () => {
+  const handleAccept = async () => {
     // Verifica las filas 3, 4 y 5
     const userRow3 = inputRows[3]; // Fila 3 ingresada por el usuario
     const userRow4 = inputRows[4]; // Fila 4 ingresada por el usuario
@@ -169,6 +173,17 @@ export default function DosCifrasScreen() {
     if (allCorrect) {
       console.log("¡Todos los números son correctos en todas las filas!");
       setShowRefreshButton(true); // Muestra el botón de refrescar
+
+      // Incrementa el contador de multiplicaciones completadas
+      setMultiplicationsCompleted((prev) => prev + 1);
+
+      // Desbloquea el logro de completar una multiplicación de dos cifras
+      await addAchievement("¡Logro desbloqueado! Completaste una multiplicación de dos cifras.");
+
+      // Verifica si se han completado 10 multiplicaciones
+      if (multiplicationsCompleted + 1 === 10) {
+        await addAchievement("¡Logro desbloqueado! Completaste 10 multiplicaciones de dos cifras.");
+      }
     } else {
       console.log("Algunos números son incorrectos.");
     }

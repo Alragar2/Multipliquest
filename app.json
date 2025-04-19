@@ -23,7 +23,8 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "lottie-react-antive"
     ],
     "experiments": {
       "typedRoutes": true
