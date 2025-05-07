@@ -1,0 +1,256 @@
+[
+    {
+        "id": 1,
+        "name": "El bosque de los números",
+        "unlocked": true,
+        "completed": false,
+        "levels": [
+            {
+                "id": 1,
+                "challenge": "Multiplicaciones de la tabla del 1",
+                "mode": "two_digit_multiplication",
+                "modifyer": "timer",
+                "subLevels": 7,
+                "timeLimit": 50,
+                "completed": false
+            },
+            {
+                "id": 2,
+                "challenge": "Multiplicaciones de la tabla del 2",
+                "mode": "four_options",
+                "modifyer": "error_limit",
+                "subLevels": 3,
+                "maxErrors": 5,
+                "completed": false
+            },
+            {
+                "id": 3,
+                "challenge": "Multiplicaciones de la tabla del 3",
+                "mode": "classic",
+                "modifyer": "error_limit",
+                "subLevels": 4,
+                "maxErrors": 5,
+                "completed": false
+            },
+            {
+                "id": 4,
+                "challenge": "Multiplicaciones de la tabla del 4",
+                "mode": "guess_next",
+                "modifyer": "error_limit",
+                "subLevels": 2,
+                "maxErrors": 4,
+                "completed": false
+            },
+            {
+                "id": 5,
+                "challenge": "Multiplicaciones de la tabla del 5",
+                "mode": "guess_factor",
+                "modifyer": "error_limit",
+                "subLevels": 2,
+                "maxErrors": 3,
+                "completed": false
+            }
+        ],
+        "description": "Multiplicaciones de las tablas del 1 al 5",
+        "boss": {
+            "name": "Tronk",
+            "description": "El árbol de la sabiduría que fue poseído por los ataques de el señor División."
+        },
+        "boss_image": "https://cdn-icons-png.flaticon.com/512/103/103205.png",
+        "world_image_background": "../assets/images/background_bosque.png"
+    },
+    {
+        "id": 2,
+        "name": "La cueva del producto",
+        "unlocked": false,
+        "completed": false,
+        "levels": [
+            {
+                "id": 1,
+                "challenge": "Multiplicaciones del 6 al 10 con tiempo máximo",
+                "mode": "matching",
+                "modifyer": "multiplicaciones",
+                "subLevels": 2,
+                "completed": false
+            },
+            {
+                "id": 2,
+                "challenge": "Multiplicaciones del 1 al 5 con tiempo máximo",
+                "mode": "true_false",
+                "modifyer": "multiplicaciones",
+                "subLevels": 1,
+                "completed": false
+            },
+            {
+                "id": 3,
+                "challenge": "Multiplicaciones del 6 al 10 con tiempo máximo",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 4,
+                "challenge": "Multiplicaciones del 1 al 5 con tiempo máximo",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 5,
+                "challenge": "Multiplicaciones del 6 al 10 con tiempo máximo",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 6,
+                "challenge": "Multiplicaciones del 1 al 5 con tiempo máximo",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 7,
+                "challenge": "Multiplicaciones del 6 al 10 con tiempo máximo",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            }
+        ],
+        "description": "Multiplicaciones del 6 al 10 pero pueden aparecer del 1 al 5. Niveles con tiempo máximo.",
+        "boss": {
+            "name": "Sept",
+            "description": "Un número siete que trabaja en lo más profundo de la cueva picando divisiones para el señor División."
+        },
+        "boss_image": "https://cdn-icons-png.flaticon.com/512/103/103205.png",
+        "world_image_background": "https://cdn-icons-png.flaticon.com/512/103/103205.png"
+    },
+    {
+        "id": 3,
+        "name": "El desierto de los factores",
+        "unlocked": false,
+        "completed": false,
+        "levels": [
+            {
+                "id": 1,
+                "challenge": "Multiplicaciones de dos cifras por una (máximo 25)",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 2,
+                "challenge": "Multiplicaciones de dos cifras por una (máximo 25)",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 3,
+                "challenge": "Multiplicaciones de dos cifras por una (máximo 25)",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 4,
+                "challenge": "Multiplicaciones de dos cifras por una (máximo 25)",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 5,
+                "challenge": "Multiplicaciones de dos cifras por una (máximo 25)",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 6,
+                "challenge": "Multiplicaciones de dos cifras por una (máximo 25)",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 7,
+                "challenge": "Multiplicaciones de dos cifras por una (máximo 25)",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 8,
+                "challenge": "Multiplicaciones de dos cifras por una (máximo 25)",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            }
+        ],
+        "description": "Multiplicaciones de dos cifras por una (hasta un máximo de 25). Niveles con oleadas (más de una multiplicación con tiempo).",
+        "boss": {
+            "name": "Arek el Arenoso",
+            "description": "Un escorpión gigante que se mueve rápido."
+        },
+        "boss_image": "https://cdn-icons-png.flaticon.com/512/103/103205.png",
+        "world_image_background": "https://cdn-icons-png.flaticon.com/512/103/103205.png"
+    },
+    {
+        "id": 4,
+        "name": "La torre numerada",
+        "unlocked": false,
+        "completed": false,
+        "levels": [
+            {
+                "id": 1,
+                "challenge": "Multiplicaciones de 2x2 cifras con oleadas",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 2,
+                "challenge": "Multiplicaciones de 2x2 cifras con oleadas",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 3,
+                "challenge": "Multiplicaciones de 2x2 cifras con oleadas",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 4,
+                "challenge": "Multiplicaciones de 2x2 cifras con oleadas",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 5,
+                "challenge": "Multiplicaciones de 2x2 cifras con oleadas",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            },
+            {
+                "id": 6,
+                "challenge": "Multiplicaciones de 2x2 cifras con oleadas",
+                "mode": "respuesta_clasica",
+                "modifyer": "multiplicaciones",
+                "completed": false
+            }
+        ],
+        "description": "Multiplicaciones de 2x2 cifras. Oleadas. Algo difícil que todavía no está definido.",
+        "boss": {
+            "name": "El señor División",
+            "description": "El jefe final de la torre numerada."
+        },
+        "boss_image": "https://cdn-icons-png.flaticon.com/512/103/103205.png",
+        "world_image_background": "https://cdn-icons-png.flaticon.com/512/103/103205.png"
+    }
+]
