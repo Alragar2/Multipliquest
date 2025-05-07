@@ -11,6 +11,7 @@ import GuessFactorMode from "../../_components/modes/GuessFactorMode"; // Import
 import MatchingMode from "../../_components/modes/MatchingMode"; // Importa el componente del modo "Emparejamiento"
 import TwoDigitMultiplicationMode from "../../_components/modes/TwoDigitMultiplicationMode"; // Importa el componente del modo de multiplicación de dos dígitos
 import ErrorLimitModifier from "../../_components/modifiers/ErrorLimitModifier"; // Importa el modificador de límite de errores
+import BlinkModifier from "../../_components/modifiers/BlinkModifier"; // Importa el modificador de parpadeo
 
 // Mapeo estático de imágenes
 const worldImages: Record<number, any> = {
@@ -146,6 +147,18 @@ export default function MundoScreen() {
           >
             {renderMode(handleError)}
           </ErrorLimitModifier>
+        );
+      case "blink":
+        return (
+          <BlinkModifier
+            blinkDuration={currentChallenge.blinkDuration || 1000}
+            onBlink={() => {}}
+            onLose={() => router.back()}
+            onComplete={handleSubLevelComplete}
+            onError={handleError}
+          >
+            {renderMode(handleError)}
+          </BlinkModifier>
         );
       default:
         return renderMode(() => {});
