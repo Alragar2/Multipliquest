@@ -3,18 +3,27 @@ import { View, Text, StyleSheet, ImageBackground, FlatList, TouchableOpacity, Im
 import { useRouter } from "expo-router";
 
 const worlds = [
-  { id: 1, name: "El bosque de los numeros", image: require("../../assets/images/bosque_de_los_numeros.png") },
-  { id: 2, name: "La cueva del producto", image: require("../../assets/images/cueva_del_producto.png") },
-  { id: 3, name: "El desierto de los factores", image: require("../../assets/images/desierto_de_los_factores.png") },
-  { id: 4, name: "La torre numerada", image: require("../../assets/images/torre_numerada.png") },
+  { id: 1, name: "El bosque de los numeros", image: require("../../assets/images/bosque_de_los_numeros.png"), locked: false },
+  { id: 2, name: "La cueva del producto", image: require("../../assets/images/cueva_del_producto.png"), locked: true },
+  { id: 3, name: "El desierto de los factores", image: require("../../assets/images/desierto_de_los_factores.png"), locked: true },
+  { id: 4, name: "La torre numerada", image: require("../../assets/images/torre_numerada.png"), locked: true },
 ];
 
 const WorldItem = ({ item, onPress }: { item: typeof worlds[0]; onPress: (id: number) => void }) => {
   return (
-    <TouchableOpacity onPress={() => onPress(item.id)} style={styles.button}>
-      <View style={styles.button}>
-        <Image source={item.image} style={styles.image} />
-        <Text style={styles.worldName}>{item.name}</Text>
+    <TouchableOpacity 
+      onPress={() => !item.locked && onPress(item.id)} 
+      style={styles.button}
+      disabled={item.locked}
+    >
+      <View style={[styles.button, item.locked && styles.lockedButton]}>
+        <Image 
+          source={item.image} 
+          style={[styles.image, item.locked && styles.lockedImage]} 
+        />
+        <Text style={[styles.worldName, item.locked && styles.lockedText]}>
+          {item.name} {item.locked && "🔒"}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -82,5 +91,14 @@ const styles = StyleSheet.create({
     color: "#fff",
     marginTop: 10,
     textAlign: "center",
+  },
+  lockedButton: {
+    opacity: 0.7,
+  },
+  lockedImage: {
+    opacity: 0.5,
+  },
+  lockedText: {
+    color: "#aaa",
   },
 });

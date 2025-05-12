@@ -145,7 +145,7 @@ export default function TwoDigitMultiplicationMode({ onComplete, onError }: TwoD
                   editable={false}
                   borderColor="rgba(137, 231, 255, 0)"
                   backgroundColor="rgba(137, 231, 255, 0)"
-                  size ={42} // Cambia el tamaño del input en la fila 4
+                  size ={40} // Cambia el tamaño del input en la fila 4
                   marginHorizontal={3}
                 />
               ) : value === "line" ? (
@@ -160,7 +160,7 @@ export default function TwoDigitMultiplicationMode({ onComplete, onError }: TwoD
                   borderColor={isError ? "#FF0000" : "rgba(137, 231, 255, 0)"}
                   backgroundColor={rowIndex >= 3 ? "#fff" : "rgba(137, 231, 255, 0)"}
                   onPress={() => setSelectedInput({ row: rowIndex, col: colIndex })}
-                  size ={42} // Cambia el tamaño del input en la fila 4
+                  size ={40} // Cambia el tamaño del input en la fila 4
                   marginHorizontal={3}
                   marginVertical={1}
                 />
