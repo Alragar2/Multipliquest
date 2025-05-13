@@ -8,17 +8,17 @@
             {
                 "id": 1,
                 "challenge": "Multiplicaciones de la tabla del 1",
-                "mode": "two_digit_multiplication",
-                "modifyer": "timer",
-                "subLevels": 7,
-                "timeLimit": 50,
+                "mode": "classic",
+                "modifyer": "error_limit",
+                "subLevels": 3,
+                "maxErrors": 8,
                 "completed": false
             },
             {
                 "id": 2,
                 "challenge": "Multiplicaciones de la tabla del 2",
                 "mode": "four_options",
-                "modifyer": "error_limit",
+                "modifyer": "none",
                 "subLevels": 3,
                 "maxErrors": 5,
                 "completed": false
@@ -26,9 +26,9 @@
             {
                 "id": 3,
                 "challenge": "Multiplicaciones de la tabla del 3",
-                "mode": "classic",
-                "modifyer": "error_limit",
-                "subLevels": 4,
+                "mode": "matching",
+                "modifyer": "none",
+                "subLevels": 2,
                 "maxErrors": 5,
                 "completed": false
             },
@@ -38,16 +38,16 @@
                 "mode": "guess_next",
                 "modifyer": "error_limit",
                 "subLevels": 2,
-                "maxErrors": 4,
+                "maxErrors": 6,
                 "completed": false
             },
             {
                 "id": 5,
                 "challenge": "Multiplicaciones de la tabla del 5",
-                "mode": "guess_factor",
-                "modifyer": "error_limit",
-                "subLevels": 2,
-                "maxErrors": 3,
+                "mode": "classic",
+                "modifyer": "timer",
+                "subLevels": 4,
+                "timeLimit": 60,
                 "completed": false
             }
         ],

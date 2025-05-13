@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ImageBackground, Button, Alert } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import worldsData from "../../../data/worlds.json";
 import FourOptionsMode from "../../_components/modes/FourOptionsMode"; // Importa el componente del modo
 import TimeModifier from "../../_components/modifiers/TimeModifier"; // Importa el modificador de tiempo
@@ -77,8 +78,17 @@ export default function MundoScreen() {
     const allLevelsCompleted = currentWorld.levels.every((level) => level.completed);
     if (allLevelsCompleted) {
       currentWorld.completed = true; // Marca el bioma como completado
+      
+      // Notificar a la pantalla de aventura matemática que se completó el mundo
+      try {
+        if (typeof world.onComplete === 'function') {
+          world.onComplete();
+        }
+      } catch (error) {
+        console.error("Error al ejecutar el callback onComplete:", error);
+      }
   
-      // Desbloquea el siguiente bioma
+      // Desbloquea el siguiente bioma en el contexto local
       const nextWorld = updatedWorlds.find((w) => w.id === currentWorld.id + 1);
       if (nextWorld) {
         nextWorld.unlocked = true;
@@ -89,9 +99,28 @@ export default function MundoScreen() {
       setCurrentLevel((prev) => prev + 1); // Avanza al siguiente nivel
       setSubLevel(0); // Reinicia los subniveles
     } else {
-      Alert.alert("¡Felicidades!", "Has completado todos los niveles de este bioma.", [
-        { text: "Aceptar", onPress: () => router.back() },
-      ]);
+      // Notificar que se ha completado el bioma para desbloquear el siguiente
+      const worldId = Number(id);
+      // Guardar el ID del mundo completado en AsyncStorage
+      AsyncStorage.setItem('completedWorldId', worldId.toString())
+        .then(() => {
+          console.log('ID de mundo completado guardado:', worldId);
+          Alert.alert("¡Felicidades!", "Has completado todos los niveles de este bioma.", [
+            { 
+              text: "Aceptar", 
+              onPress: () => {
+                // Regresar a la pantalla anterior
+                router.back();
+              }
+            },
+          ]);
+        })
+        .catch((error: Error) => {
+          console.error('Error al guardar el mundo completado:', error);
+          Alert.alert("¡Felicidades!", "Has completado todos los niveles de este bioma.", [
+            { text: "Aceptar", onPress: () => router.back() },
+          ]);
+        });
     }
   };
 

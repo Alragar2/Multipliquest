@@ -1,0 +1,122 @@
+[
+    {
+        "worldId": 1,
+        "dialogs": [
+            {
+                "character": "Hada Suma",
+                "image": "hada_suma",
+                "text": "¡Hola! 🌟 Bienvenido al Bosque de los Números. Yo soy el Hada Suma, y estaré aquí para ayudarte en tu aventura. ¿Listo para aprender y divertirte con los números?"
+            },
+            {
+                "character": "Senyor Division",
+                "image": "senyor_division",
+                "text": "¡¿Diversión?! ¡Bah! Soy el Señor División, y he venido a interrumpirlo todo. ¡Voy a romper tus cálculos y dividir tus esperanzas en pedacitos! 😈"
+            },
+            {
+                "character": "Hada Suma",
+                "image": "hada_suma",
+                "text": "¡Otra vez tú! Siempre intentando complicarlo todo... ¡Pero esta vez no estás solo! Nuestro héroe está aquí para salvar la multiplicación. ¿Verdad que sí?"
+            },
+            {
+                "character": "Senyor Division",
+                "image": "senyor_division",
+                "text": "Ja… quiero ver si eres tan valiente como dicen. Este bosque está lleno de retos… ¿podrás con ellos?"
+            },
+            {
+                "character": "Hada Suma",
+                "image": "hada_suma",
+                "text": "¡No le hagas caso! Yo te ayudaré en cada paso. ¡Vamos! La aventura empieza ahora. 🌳✨"
+            }
+        ]
+    },
+    {
+        "worldId": 2,
+        "dialogs": [
+            {
+                "character": "Hada Suma",
+                "image": "hada_suma",
+                "text": "Este desierto puede parecer seco… ¡pero está lleno de retos interesantes!"
+            },
+            {
+                "character": "Senyor Division",
+                "image": "senyor_division",
+                "text": "Y de trampas, jejeje. ¿Puedes encontrar los factores antes de que se te derrita el cerebro?"
+            },
+            {
+                "character": "Hada Suma",
+                "image": "hada_suma",
+                "text": "¡No lo escuches! Solo quiere confundirte. Mira bien los números y encuentra sus secretos."
+            },
+            {
+                "character": "Senyor Division",
+                "image": "senyor_division",
+                "text": "Vamos, vamos… ¿qué pasa? ¿El calor te asusta?"
+            },
+            {
+                "character": "Hada Suma",
+                "image": "hada_suma",
+                "text": "¡Vamos, campeón! ¡Este desierto se cruza con inteligencia! No dejes que el Señor División te engañe. ¡Confía en ti mismo y en tus habilidades! 🌵✨"
+            }
+        ]
+    },
+    {
+        "worldId": 3,
+        "dialogs": [
+            {
+                "character": "Hada Suma",
+                "image": "hada_suma",
+                "text": "Aquí dentro todo es más oscuro… pero cada número correcto será una luz en tu camino."
+            },
+            {
+                "character": "Senyor Division",
+                "image": "senyor_division",
+                "text": "¿Luz? ¡Bah! ¡Yo prefiero el caos y la confusión!"
+            },
+            {
+                "character": "Hada Suma",
+                "image": "hada_suma",
+                "text": "Ya lo sabes… si fallas mucho, el eco de la cueva empieza a repetir tus errores…"
+            },
+            {
+                "character": "Senyor Division",
+                "image": "senyor_division",
+                "text": "¡Eso es lo que quiero! ¡Que todos escuchen tus fallos una y otra vez! ¡Ja, ja, ja!"
+            },
+            {
+                "character": "Hada Suma",
+                "image": "hada_suma",
+                "text": "Pero tú no eres así. ¡Eres un héroe! ¡Vamos a iluminar esta cueva juntos! 💡✨"
+            }
+        ]
+    },
+    {
+        "worldId": 4,
+        "dialogs": [
+            {
+                "character": "Hada Suma",
+                "image": "hada_suma",
+                "text": "Has llegado a la Torre Numerada. Cada piso tiene un reto mayor. ¡Prepárate!"
+            },
+            {
+                "character": "Senyor Division",
+                "image": "senyor_division",
+                "text": "¡Al fin una verdadera prueba! ¿Crees que podrás escalar hasta la cima?"
+            },
+            {
+                "character": "Hada Suma",
+                "image": "hada_suma",
+                "text": "No lo subestimes, Señor División. ¡Nuestro jugador ha llegado muy lejos!"
+            },
+            {
+                "character": "Senyor Division",
+                "image": "senyor_division",
+                "text": "¿De verdad? ¡Vamos a ver si puede con los números más grandes!"
+            },
+            {
+                "character": "Hada Suma",
+                "image": "hada_suma",
+                "text": "¡No te preocupes! Cada piso es un nuevo desafío, pero juntos podemos superarlo. ¡A por ello! 🏰✨"
+            }
+        ]
+    }
+]
