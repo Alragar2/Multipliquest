@@ -15,7 +15,7 @@ export default function SettingsScreen() {
             <SimpleMusicControl />
           </View>
         </View>
-      </ScrollView>
+      </ScrollView> 
     </SafeAreaView>
   );
 }
