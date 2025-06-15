@@ -5,7 +5,7 @@ import { useRouter } from "expo-router";
 import InputBox from "../_components/InputBox";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { generateRandomNumbers } from "../utils/generateRandomNumbers"; // Importa la función
+import generateRandomNumbers from "../utils/generateRandomNumbers"; // Importa la función
 import PredButton from "../_components/PredButton";
 import { addAchievement } from "../_utils/achievements";
 
