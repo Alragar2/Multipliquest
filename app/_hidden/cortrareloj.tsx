@@ -1,105 +1,223 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, Platform } from 'react-native';
+import { useRouter } from 'expo-router';
+import NumberKeyboard from '../_components/NumberKeyboard';
+import InputBox from '../_components/InputBox';
+import PredButton from '../_components/PredButton';
 
 function getRandomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 export default function ContraRelojScreen() {
-  const [factor1, setFactor1] = useState(getRandomInt(10, 99));
-  const [factor2, setFactor2] = useState(getRandomInt(10, 99));
-  const [input, setInput] = useState("");
-  const [score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(40);
-  const [totalTime, setTotalTime] = useState(0);
-  const [finished, setFinished] = useState(false);
+  const router = useRouter();
+  const [factor1, setFactor1] = useState(getRandomInt(2, 12));
+  const [factor2, setFactor2] = useState(getRandomInt(2, 12));
+  const [userAnswer, setUserAnswer] = useState('');
+  const [multiplicationsCompleted, setMultiplicationsCompleted] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(30);
+  const [totalTimeSpent, setTotalTimeSpent] = useState(0);
+  const [gameFinished, setGameFinished] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const secAdd = 10; // Segundos a añadir por respuesta correcta
+  const secStart = 30; // Segundos iniciales
 
-  useEffect(() => {
-    if (finished) return;
-    timerRef.current = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timerRef.current!);
-          setFinished(true);
-          setTotalTime((t) => t + prev);
-          return 0;
-        }
-        setTotalTime((t) => t + 1);
-        return prev - 1;
-      });
-    }, 1000);
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [finished]);
-
-  const nextMultiplication = () => {
-    setFactor1(getRandomInt(10, 99));
-    setFactor2(getRandomInt(10, 99));
-    setInput("");
+  // Iniciar juego
+  const startGame = () => {
+    setGameStarted(true);
+    setGameFinished(false);
+    setMultiplicationsCompleted(0);
+    setTimeLeft(secStart);
+    setTotalTimeSpent(0);
+    setUserAnswer('');
+    setShowError(false);
+    setShowSuccess(false);
+    generateNewMultiplication();
   };
 
-  const handleSubmit = () => {
-    if (finished) return;
-    if (parseInt(input) === factor1 * factor2) {
-      setScore(score + 1);
-      setTimeLeft((t) => t + 10);
-      nextMultiplication();
+  // Generar nueva multiplicación
+  const generateNewMultiplication = () => {
+    setFactor1(getRandomInt(2, 12));
+    setFactor2(getRandomInt(2, 12));
+    setUserAnswer('');
+    setShowError(false);
+    setShowSuccess(false);
+  };
+
+  // Timer effect
+  useEffect(() => {
+    if (gameStarted && !gameFinished && timeLeft > 0) {
+      timerRef.current = setInterval(() => {
+        setTimeLeft(prev => {
+          const newTime = prev - 1;
+          setTotalTimeSpent(t => t + 1);
+          
+          if (newTime <= 0) {
+            setGameFinished(true);
+            return 0;
+          }
+          return newTime;
+        });
+      }, 1000);
     } else {
-      setInput("");
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    }
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [gameStarted, gameFinished, timeLeft]);
+
+  // Manejar entrada de números
+  const handleNumberPress = (number: string) => {
+    if (!gameStarted || gameFinished) return;
+    if (userAnswer.length < 4) { // Limitar a 4 dígitos
+      setUserAnswer(prev => prev + number);
+      setShowError(false);
     }
   };
 
-  if (finished) {
+  // Manejar borrado
+  const handleDelete = () => {
+    if (!gameStarted || gameFinished) return;
+    setUserAnswer(prev => prev.slice(0, -1));
+    setShowError(false);
+  };
+
+  // Manejar verificación de respuesta
+  const handleAccept = () => {
+    if (!gameStarted || gameFinished || userAnswer === '') return;
+    
+    const correctAnswer = factor1 * factor2;
+    const userAnswerNum = parseInt(userAnswer);
+    
+    if (userAnswerNum === correctAnswer) {
+      // Respuesta correcta
+      setShowSuccess(true);
+      setMultiplicationsCompleted(prev => prev + 1);
+      setTimeLeft(prev => prev + secAdd); 
+      
+      // Generar nueva multiplicación después de un breve delay
+      setTimeout(() => {
+        generateNewMultiplication();
+      }, 300);
+    } else {
+      // Respuesta incorrecta
+      setShowError(true);
+      setTimeout(() => {
+        setUserAnswer('');
+        setShowError(false);
+      }, 1000);
+    }
+  };
+
+  // Pantalla inicial
+  if (!gameStarted) {
     return (
-      <View style={styles.centered}>
-        <Text style={styles.resultTitle}>¡Tiempo terminado!</Text>
-        <Text style={styles.resultText}>
-          Tiempo total jugado: {totalTime} segundos
-        </Text>
-        <Text style={styles.resultText}>
-          Multiplicaciones resueltas: {score}
-        </Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            setScore(0);
-            setTimeLeft(40);
-            setTotalTime(0);
-            setFinished(false);
-            nextMultiplication();
-          }}
-        >
-          <Text style={styles.buttonText}>Jugar de nuevo</Text>
-        </TouchableOpacity>
+      <View style={styles.container}>
+        <View style={styles.title}>
+          <Text style={styles.welcomeTitle}>Contrarreloj</Text>
+          <Text style={styles.welcomeText}>
+            • Tienes {timeLeft} segundos iniciales{'\n'}
+            • Cada multiplicación correcta suma {secAdd} segundos{'\n'}
+            • ¡Resuelve todas las que puedas!
+          </Text>
+          <PredButton 
+            onPress={startGame} 
+            title="Comenzar" 
+            iconName="play-outline" 
+            size="large" 
+          />
+          <PredButton 
+            onPress={() => router.back()} 
+            title="Volver a Inicio" 
+            iconName="arrow-back-outline" 
+            size="small" 
+          />
+        </View>
       </View>
     );
   }
 
+  // Pantalla de resultados finales
+  if (gameFinished) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.title}>
+          <Text style={styles.resultTitle}>¡Tiempo Terminado!</Text>
+          <View style={styles.statsContainer}>
+            <Text style={styles.statLabel}>Multiplicaciones completadas:</Text>
+            <Text style={styles.statValue}>{multiplicationsCompleted}</Text>
+            
+            <Text style={styles.statLabel}>Tiempo total gastado:</Text>
+            <Text style={styles.statValue}>{totalTimeSpent} segundos</Text>
+          </View>
+          <PredButton 
+            onPress={startGame} 
+            title="Jugar de Nuevo" 
+            iconName="refresh-outline" 
+            size="large" 
+          />
+          <PredButton 
+            onPress={() => router.back()} 
+            title="Volver a Inicio" 
+            iconName="home-outline" 
+            size="small" 
+          />
+        </View>
+      </View>
+    );
+  }
+
+  // Pantalla de juego
   return (
     <View style={styles.container}>
-      <Text style={styles.timer}>⏰ Tiempo: {timeLeft}s</Text>
-      <Text style={styles.score}>Multiplicaciones resueltas: {score}</Text>
-      <Text style={styles.multiplication}>
-        {factor1} × {factor2} = ?
-      </Text>
-      <TextInput
-        style={styles.input}
-        value={input}
-        onChangeText={setInput}
-        keyboardType="numeric"
-        onSubmitEditing={handleSubmit}
-        editable={!finished}
-        autoFocus
-      />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={handleSubmit}
-        disabled={finished}
-      >
-        <Text style={styles.buttonText}>Comprobar</Text>
-      </TouchableOpacity>
+      <View style={styles.title}>
+        <View style={styles.gameHeader}>
+          <Text style={[styles.timer, timeLeft <= 10 && styles.timerCritical]}>
+            ⏰ {timeLeft}s
+          </Text>
+          <Text style={styles.score}>
+            Completadas: {multiplicationsCompleted}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.operationView}>
+        <View style={styles.operationCenter}>
+          <View style={styles.operationContainer}>
+            {/* Mostrar la multiplicación */}
+            <View style={styles.row}>
+              <Text style={styles.multiplicationText}>{factor1} × {factor2} = </Text>
+              <InputBox
+                value={userAnswer}
+                placeholder=""
+                fontSize={28}
+                editable={true}
+                borderColor={showError ? "#FF0000" : showSuccess ? "#4CAF50" : "#89E7FF"}
+                backgroundColor={showError ? "#FFE6E6" : showSuccess ? "#E8F5E8" : "#fff"}
+                size={80}
+                onPress={() => {}} // No necesario para este caso
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.keyboardContainer}>
+        <NumberKeyboard
+          onNumberPress={handleNumberPress}
+          onAccept={handleAccept}
+          onDelete={handleDelete}
+        />
+      </View>
     </View>
   );
 }
@@ -111,59 +229,113 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#89E7FF",
   },
-  centered: {
-    flex: 1,
-    justifyContent: "center",
+  title: {
+    flex: 0.8,
+    justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "#89E7FF",
+    paddingTop: Platform.OS === "web" ? "2%" : "5%",
+  },
+  welcomeTitle: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 30,
+  },
+  welcomeText: {
+    fontSize: 18,
+    color: '#333',
+    textAlign: 'center',
+    marginBottom: 40,
+    lineHeight: 28,
+  },
+  gameHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 20,
+    alignItems: 'center',
   },
   timer: {
-    fontSize: 32,
-    fontWeight: "bold",
-    marginBottom: 20,
-    color: "#333",
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  timerCritical: {
+    color: '#FF0000',
+    textShadowColor: '#FF0000',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
   },
   score: {
     fontSize: 20,
-    marginBottom: 20,
-    color: "#333",
+    fontWeight: '600',
+    color: '#333',
   },
-  multiplication: {
-    fontSize: 36,
-    fontWeight: "bold",
-    marginBottom: 20,
-    color: "#222",
+  operationView: {
+    flex: 6,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    backgroundColor: "#89E7FF",
+    width: "100%",
+    paddingHorizontal: 20,
   },
-  input: {
-    fontSize: 28,
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    padding: 10,
-    width: 120,
-    textAlign: "center",
-    marginBottom: 20,
+  operationContainer: {
+    width: "80%",
+    alignItems: "center",
+    marginTop: 50,
   },
-  button: {
-    backgroundColor: "#1E90FF",
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 8,
-    marginTop: 10,
+  operationCenter: {
+    justifyContent: "center",
+    alignItems: "center",
   },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
+  row: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 10,
+  },
+  multiplicationText: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#222',
+    marginRight: 15,
+  },
+  keyboardContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: Platform.OS === "web" ? "flex-end" : "center",
+    width: Platform.OS === "web" ? "10%" : "100%",
+    minWidth: Platform.OS === "web" ? 300 : "100%",
+    height: Platform.OS === "web" ? "15%" : "100%",
+    paddingBottom: Platform.OS === "web" ? "1%" : "5%",
   },
   resultTitle: {
-    fontSize: 32,
-    fontWeight: "bold",
-    marginBottom: 20,
-    color: "#222",
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 40,
   },
-  resultText: {
-    fontSize: 22,
-    marginBottom: 10,
-    color: "#333",
+  statsContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 30,
+    marginBottom: 40,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  statLabel: {
+    fontSize: 18,
+    color: '#666',
+    marginBottom: 5,
+  },
+  statValue: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#1E90FF',
+    marginBottom: 20,
   },
 });
