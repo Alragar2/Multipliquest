@@ -2,12 +2,14 @@ import { View, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import PredButton from "../_components/PredButton";
 import Background from "../_components/Background";
+import BackgroundMusic from "../_components/BackgroundMusic";
 
 export default function HomeScreen() {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
+      <BackgroundMusic />
       <Background />
       <View style={styles.MainButtons}>
         <PredButton onPress={() => router.push("/_hidden/tablas")} title="Tablas" iconName="grid-outline" size="extraLarge" />
