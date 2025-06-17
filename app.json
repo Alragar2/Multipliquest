@@ -1,21 +1,33 @@
 {
   "expo": {
-    "name": "MultipliQuest",
-    "slug": "MultipliQuest",
+    "name": "Multipliquest",
+    "slug": "multipliquest",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/Logo.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "icon": "./assets/images/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#89E7FF"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.alvarorg.multipliquest"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#89E7FF"
+      },
+      "package": "com.alvarorg.multipliquest",
+      "versionCode": 1,
+      "permissions": [
+        "MODIFY_AUDIO_SETTINGS"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -24,16 +36,20 @@
     },
     "plugins": [
       "expo-router",
-      "lottie-react-native"
+      [
+        "expo-av",
+        {
+          "microphonePermission": false
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
     },
     "extra": {
       "eas": {
-        "projectId": "1d35758f-4e4a-473b-a015-0df7c82605c1"
+        "projectId": "your-project-id-here"
       }
     }
-  },
-  "assetBundlePatterns": ["**/*"]
+  }
 }

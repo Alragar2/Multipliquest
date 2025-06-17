@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SimpleMusicControl() {
-  const [muted, setMuted] = useState(false);
-  const [volume, setVolume] = useState(0.3);
+  const [muted, setMutedState] = useState(false);
+  const [volume, setVolumeState] = useState(0.5);
 
   // Cargar preferencias al montar
   useEffect(() => {
@@ -13,8 +13,8 @@ export default function SimpleMusicControl() {
         const savedVolume = await AsyncStorage.getItem('music_volume');
         const savedMuted = await AsyncStorage.getItem('music_muted');
         
-        if (savedVolume !== null) setVolume(parseFloat(savedVolume));
-        if (savedMuted !== null) setMuted(savedMuted === 'true');
+        if (savedVolume !== null) setVolumeState(parseFloat(savedVolume));
+        if (savedMuted !== null) setMutedState(savedMuted === 'true');
       } catch (error) {
         console.error('Error cargando preferencias:', error);
       }
@@ -24,19 +24,21 @@ export default function SimpleMusicControl() {
 
   const handleMutePress = () => {
     const newMuted = !muted;
-    setMuted(newMuted);
+    setMutedState(newMuted);
     AsyncStorage.setItem('music_muted', String(newMuted));
+    console.log('🔘 SimpleMusicControl: Mute cambiado a:', newMuted);
   };
 
   const handleVolumeChange = (newVolume: number) => {
     const safeVolume = Math.max(0, Math.min(1, newVolume));
-    setVolume(safeVolume);
+    setVolumeState(safeVolume);
     AsyncStorage.setItem('music_volume', String(safeVolume));
+    console.log('🔘 SimpleMusicControl: Volumen cambiado a:', safeVolume);
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Música</Text>
+      <Text style={styles.title}>Control de Música</Text>
       
       <View style={styles.row}>
         <Text>Silenciar</Text>
@@ -88,9 +90,8 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    width: '100%',
     marginVertical: 10,
+    gap: 10,
   },
   muteButton: {
     marginLeft: 10,
@@ -120,10 +121,5 @@ const styles = StyleSheet.create({
   sliderThumb: {
     height: 8,
     backgroundColor: '#4caf50',
-  },
-  debug: {
-    fontSize: 12,
-    color: '#666',
-    marginBottom: 10,
   },
 });

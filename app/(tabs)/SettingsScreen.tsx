@@ -1,42 +1,40 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import SimpleMusicControl from '../_components/SimpleMusicControl';
 
 export default function SettingsScreen() {
-  console.log('🔧 SettingsScreen render');
-
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.container}>
-          <Text style={styles.header}>Configuración</Text>
-          
+        <View style={styles.content}>
+          <Text style={styles.title}>Configuración</Text>
           <View style={styles.section}>
             <SimpleMusicControl />
           </View>
         </View>
-      </ScrollView> 
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
+  container: {
     flex: 1,
     backgroundColor: '#89E7FF',
   },
   scrollContent: {
     flexGrow: 1,
   },
-  container: {
+  content: {
     flex: 1,
     padding: 20,
   },
-  header: {
+  title: {
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    color: '#333',
   },
   section: {
     backgroundColor: 'white',
@@ -49,9 +47,4 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 15,
-  }
 });
