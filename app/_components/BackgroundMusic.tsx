@@ -9,16 +9,12 @@ export default function BackgroundMusic() {
   const [volume, setVolume] = useState(0.5);
   const checkIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  console.log("🎵 BackgroundMusic: RENDER ejecutándose");
 
   useEffect(() => {
-    console.log(
-      "🎵 BackgroundMusic: useEffect EJECUTÁNDOSE - componente montado"
-    );
+    
 
     const setupAudio = async () => {
       try {
-        console.log("🎵 BackgroundMusic: Iniciando setupAudio...");
 
         await Audio.setAudioModeAsync({
           staysActiveInBackground: true,
@@ -29,7 +25,6 @@ export default function BackgroundMusic() {
             : {}),
         });
 
-        console.log("🎵 BackgroundMusic: Audio mode configurado, cargando archivo...");
 
         const { sound } = await Audio.Sound.createAsync(
           require("../../assets/music/background_music.mp3"),
@@ -41,7 +36,6 @@ export default function BackgroundMusic() {
         );
 
         soundRef.current = sound;
-        console.log("🎵 BackgroundMusic: ✅ ÉXITO - Audio cargado y reproduciendo");
 
         // Configurar verificación de cambios en AsyncStorage
         checkIntervalRef.current = setInterval(async () => {
@@ -53,12 +47,7 @@ export default function BackgroundMusic() {
             const newMuted = savedMuted === "true";
 
             if (newVolume !== volume || newMuted !== muted) {
-              console.log(
-                "🎵 BackgroundMusic: Aplicando cambios - muted:",
-                newMuted,
-                "volume:",
-                newVolume
-              );
+              
               setVolume(newVolume);
               setMuted(newMuted);
 
@@ -66,7 +55,6 @@ export default function BackgroundMusic() {
                 await soundRef.current.setVolumeAsync(newMuted ? 0 : newVolume);
                 if (newMuted) {
                   await soundRef.current.pauseAsync();
-                  console.log("🎵 BackgroundMusic: Música pausada");
                 } else {
                   const status = await soundRef.current.getStatusAsync();
                   if (
@@ -75,7 +63,6 @@ export default function BackgroundMusic() {
                     !status.isPlaying
                   ) {
                     await soundRef.current.playAsync();
-                    console.log("🎵 BackgroundMusic: Música reanudada");
                   }
                 }
               }
