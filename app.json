@@ -24,7 +24,7 @@
         "backgroundColor": "#89E7FF"
       },
       "package": "com.alvarorg.multipliquest",
-      "versionCode": 3,
+      "versionCode": 4,
       "versionName": "1.0.2",
       "permissions": [
         "MODIFY_AUDIO_SETTINGS"
