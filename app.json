@@ -2,7 +2,7 @@
   "expo": {
     "name": "Multipliquest",
     "slug": "multipliquest",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "light",
@@ -24,7 +24,8 @@
         "backgroundColor": "#89E7FF"
       },
       "package": "com.alvarorg.multipliquest",
-      "versionCode": 2,
+      "versionCode": 3,
+      "versionName": "1.0.2",
       "permissions": [
         "MODIFY_AUDIO_SETTINGS"
       ]
